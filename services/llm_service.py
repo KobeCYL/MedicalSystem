@@ -1,6 +1,7 @@
 """LLM服务 - DeepSeek集成和Pydantic验证"""
 import os
 import time
+import json
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage
 from langchain.prompts import PromptTemplate
@@ -25,25 +26,19 @@ class EnhancedLLMService:
             "max_tokens": self.max_tokens
         })
         
-        # 检查是否处于测试模式（无API密钥）
-        self.test_mode = not bool(self.api_key)
-        if self.test_mode:
-            logger.warning("Running in test mode - no API key provided, will use mock responses")
-            logger.log_process_step("llm_service_init", "test_mode_enabled", {
-                "reason": "no_api_key"
-            })
+        # 检查API密钥
+        if not self.api_key:
+            logger.error("Missing DEEPSEEK_API_KEY environment variable")
+            raise ValueError("DEEPSEEK_API_KEY not found in environment variables")
         
         try:
-            if not self.test_mode:
-                self.llm = ChatOpenAI(
-                    model=self.model_name,
-                    api_key=self.api_key,
-                    base_url=self.base_url,
-                    temperature=self.temperature,
-                    max_tokens=self.max_tokens
-                )
-            else:
-                self.llm = None  # 测试模式下不使用实际的LLM
+            self.llm = ChatOpenAI(
+                model=self.model_name,
+                api_key=self.api_key,
+                base_url=self.base_url,
+                temperature=self.temperature,
+                max_tokens=self.max_tokens
+            )
             
             self.output_parser = MedicalOutputParser()
             
@@ -121,7 +116,12 @@ class EnhancedLLMService:
             
             logger.log_process_step("build_prompt", "completed", {
                 "prompt_length": len(prompt),
-                "has_format_instructions": bool(self.output_parser.get_format_instructions())
+                'prompt': prompt,
+                "has_format_instructions": bool(self.output_parser.get_format_instructions()),
+                "urgency": request.guideline_info.urgency.value,
+                "recommended_action": request.guideline_info.recommended_action,
+                "special_notes": request.risk_info.special_notes,
+                "risk_groups": ", ".join(request.risk_info.risk_groups)
             })
             
             # 记录完整的LLM调用信息
@@ -136,34 +136,25 @@ class EnhancedLLMService:
             # 开始计时
             logger.start_timer("llm_call")
             
-            # 调用LLM或生成模拟响应
-            if self.test_mode:
-                logger.log_process_step("llm_call", "test_mode_mock", {
-                    "model": self.model_name,
-                    "note": "Using mock response for testing"
-                })
-                # 生成模拟的医疗建议响应
-                llm_output = self._generate_mock_response(request)
-                call_duration = logger.end_timer("llm_call")
-            else:
-                logger.log_process_step("llm_call", "started", {
-                    "model": self.model_name,
-                    "temperature": self.temperature,
-                    "max_tokens": self.max_tokens
-                })
-                
-                response = await self.llm.agenerate([
-                    [
-                        SystemMessage(content="你是一个专业的医疗导诊AI助手"),
-                        HumanMessage(content=prompt)
-                    ]
-                ])
-                
-                # 记录调用耗时
-                call_duration = logger.end_timer("llm_call")
-                
-                # 获取响应内容
-                llm_output = response.generations[0][0].text
+            # 调用LLM
+            logger.log_process_step("llm_call", "started", {
+                "model": self.model_name,
+                "temperature": self.temperature,
+                "max_tokens": self.max_tokens
+            })
+            
+            response = await self.llm.agenerate([
+                [
+                    SystemMessage(content="你是一个专业的医疗导诊AI助手"),
+                    HumanMessage(content=prompt)
+                ]
+            ])
+            
+            # 记录调用耗时
+            call_duration = logger.end_timer("llm_call")
+            
+            # 获取响应内容
+            llm_output = response.generations[0][0].text
             
             logger.log_process_step("llm_call", "completed", {
                 "response_length": len(llm_output),
@@ -176,7 +167,7 @@ class EnhancedLLMService:
                 prompt=prompt,
                 response=llm_output,
                 model=self.model_name,
-                tokens_used=None if self.test_mode else (getattr(response, 'llm_output', {}).get("token_usage", {}).get("total_tokens") if hasattr(response, "llm_output") else None),
+                tokens_used=getattr(response, 'llm_output', {}).get("token_usage", {}).get("total_tokens") if hasattr(response, "llm_output") else None,
                 duration=call_duration
             )
             
@@ -241,44 +232,107 @@ class EnhancedLLMService:
         })
         
         return fallback_response
+
+    async def assess_medical_intent(self, text: str) -> dict:
+        logger.log_process_step("assess_medical_intent", "started", {
+            "text_preview": text[:120] if text else ""
+        })
+        try:
+            prompt = (
+                "请判断下面的中文文本是否属于规范的病情描述（包含具体症状、部位、程度、持续时间等要素），"
+                "并给出置信度评分。只输出符合以下JSON结构：\n"
+                "{\n"
+                "  \"is_medical\": true|false,\n"
+                "  \"confidence\": 0-100,\n"
+                "  \"reason\": \"简要理由\"\n"
+                "}\n\n"
+                f"文本：{text}"
+            )
+            logger.log_llm_call(prompt=prompt, response="", model=self.model_name, tokens_used=None, duration=None)
+            logger.start_timer("llm_intent_call")
+            response = await self.llm.agenerate([[
+                SystemMessage(content="你是一个专业的医疗语义分析器，只输出JSON"),
+                HumanMessage(content=prompt)
+            ]])
+            duration = logger.end_timer("llm_intent_call")
+            output = response.generations[0][0].text
+            logger.log_llm_call(prompt=prompt, response=output, model=self.model_name, tokens_used=None, duration=duration)
+            logger.log_process_step("assess_medical_intent", "llm_completed", {
+                "duration": duration,
+                "output_preview": output[:200]
+            })
+            try:
+                result = json.loads(output)
+            except Exception:
+                start = output.find("{")
+                end = output.rfind("}")
+                if start != -1 and end != -1:
+                    result = json.loads(output[start:end+1])
+                else:
+                    result = {"is_medical": False, "confidence": 0, "reason": "输出解析失败"}
+            logger.log_process_step("assess_medical_intent", "completed", {
+                "is_medical": result.get("is_medical"),
+                "confidence": result.get("confidence")
+            })
+            return result
+        except Exception as e:
+            logger.log_error_with_context(e, {"function": "assess_medical_intent"})
+            return {"is_medical": False, "confidence": 0, "reason": "LLM分析异常"}
+
+    def build_multi_candidate_prompt(self, patient_info: dict, candidate_evidence: list) -> str:
+        lines = []
+        lines.append("你是一个专业的医疗导诊AI助手。请根据候选疾病与患者信息进行概率评估，并给出综合建议。")
+        lines.append(f"环境约束：模型={self.model_name}，温度={self.temperature}，最大输出令牌={self.max_tokens}。请确保仅输出JSON且不要超过最大令牌，避免Markdown或额外文本。")
+        lines.append("患者信息：")
+        lines.append(f"- 年龄: {patient_info.get('age', '未知')}")
+        lines.append(f"- 性别: {patient_info.get('gender', '未知')}")
+        lines.append(f"- 特殊状况: {patient_info.get('special_conditions', '无')}")
+        lines.append("候选疾病列表：")
+        for idx, c in enumerate(candidate_evidence, 1):
+            gi = c.get('guideline') or {}
+            ri = c.get('risk') or {}
+            lines.append(f"{idx}. 疾病ID: {c.get('disease_id')}，名称: {c.get('disease_name')}，置信度: {c.get('confidence')}")
+            lines.append(f"   - 匹配症状: {', '.join(c.get('matched_symptoms') or [])}")
+            lines.append(f"   - 紧急程度: {gi.get('urgency', '未知')}，建议措施: {gi.get('recommended_action', '建议就医')}")
+            lines.append(f"   - 注意事项: {ri.get('special_notes', '暂无')}")
+        lines.append("只输出JSON：{\n  \"probabilities\": [{\"disease_id\": string, \"disease_name\": string, \"probability\": 0-100}],\n  \"advice\": string,\n  \"notes\": string\n}\n不要使用```或Markdown包装。")
+        return "\n".join(lines)
+
+    async def generate_multi_candidate_analysis(self, patient_info: dict, candidate_evidence: list) -> dict:
+        logger.log_process_step("multi_candidate_analysis", "started", {
+            "candidate_count": len(candidate_evidence)
+        })
+        try:
+            prompt = self.build_multi_candidate_prompt(patient_info, candidate_evidence)
+            logger.log_llm_call(prompt=prompt, response="", model=self.model_name, tokens_used=None, duration=None)
+            logger.start_timer("llm_multi_candidates")
+            response = await self.llm.agenerate([
+                [
+                    SystemMessage(content="你是一个专业的医疗导诊AI助手，只输出JSON"),
+                    HumanMessage(content=prompt)
+                ]
+            ])
+            duration = logger.end_timer("llm_multi_candidates")
+            output = response.generations[0][0].text
+            logger.log_llm_call(prompt=prompt, response=output, model=self.model_name, tokens_used=None, duration=duration)
+            logger.log_process_step("multi_candidate_analysis", "llm_completed", {
+                "duration": duration,
+                "output_preview": output[:200]
+            })
+            try:
+                result = json.loads(output)
+            except Exception:
+                start = output.find("{")
+                end = output.rfind("}")
+                if start != -1 and end != -1:
+                    result = json.loads(output[start:end+1])
+                else:
+                    result = {"probabilities": [], "advice": "", "notes": "输出解析失败"}
+            logger.log_process_step("multi_candidate_analysis", "completed", {
+                "prob_count": len(result.get("probabilities", []))
+            })
+            return result
+        except Exception as e:
+            logger.log_error_with_context(e, {"function": "generate_multi_candidate_analysis"})
+            return {"probabilities": [], "advice": "", "notes": "LLM分析异常"}
     
-    def _generate_mock_response(self, request: MedicalAdviceRequest) -> str:
-        """生成模拟的医疗建议响应（用于测试模式）"""
-        logger.log_process_step("mock_response_generation", "started", {
-            "disease_name": request.symptom_info.disease_name,
-            "urgency": request.guideline_info.urgency.value
-        })
-        
-        # 根据疾病和紧急程度生成合适的模拟响应
-        if "感冒" in request.symptom_info.disease_name or "流感" in request.symptom_info.disease_name:
-            mock_response = """{
-                "assessment": "根据症状分析，疑似上呼吸道感染（普通感冒）",
-                "immediate_actions": ["多休息", "多喝水", "监测体温"],
-                "medical_advice": "建议居家观察1-2天，如症状加重或持续发热请及时就医",
-                "monitoring_points": ["体温变化", "咳嗽程度", "精神状态"],
-                "emergency_handling": "如出现高热不退、呼吸困难、胸痛等症状，请立即就医"
-            }"""
-        elif "心脏" in request.symptom_info.disease_name or "胸痛" in request.symptom_info.disease_name:
-            mock_response = """{
-                "assessment": "根据症状分析，疑似心血管相关疾病，需要专业评估",
-                "immediate_actions": ["立即停止活动", "保持安静", "拨打120"],
-                "medical_advice": "胸痛症状需要立即就医检查，不建议自行处理",
-                "monitoring_points": ["胸痛程度", "是否放射至左臂", "伴随症状"],
-                "emergency_handling": "胸痛是急症症状，请立即拨打120或前往最近医院急诊科"
-            }"""
-        else:
-            # 默认响应
-            mock_response = f"""{{
-                "assessment": "根据症状分析，疑似{request.symptom_info.disease_name}",
-                "immediate_actions": ["保持冷静", "观察症状变化", "记录症状发展"],
-                "medical_advice": "{request.guideline_info.recommended_action}",
-                "monitoring_points": ["症状严重程度", "是否出现新症状", "精神状态"],
-                "emergency_handling": "如症状加重或出现紧急情况，请立即就医"
-            }}"""
-        
-        logger.log_process_step("mock_response_generation", "completed", {
-            "response_length": len(mock_response),
-            "has_json_format": True
-        })
-        
-        return mock_response

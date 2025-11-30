@@ -8,11 +8,18 @@ from utils.enhanced_logger import logger
 class FileStorageService:
     """文件存储服务，便于第二版本升级到数据库"""
     
-    def __init__(self, data_dir: str = "./data"):
-        self.data_dir = data_dir
+    def __init__(self, data_dir: str = None):
+        if data_dir is None:
+            # 获取当前文件所在目录的父目录的data子目录
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            project_root = os.path.dirname(current_dir)
+            self.data_dir = os.path.join(project_root, "data")
+        else:
+            self.data_dir = data_dir
+            
         logger.log_process_step("file_storage_init", "started", {
-            "data_dir": data_dir,
-            "absolute_path": os.path.abspath(data_dir)
+            "data_dir": self.data_dir,
+            "absolute_path": os.path.abspath(self.data_dir)
         })
         
         # 检查数据目录是否存在

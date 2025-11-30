@@ -1,0 +1,26 @@
+2025-12-01 00:05:14,663 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点流鼻涕、发烧呢...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 10, 'has_medical_intent': False}
+2025-12-01 00:05:22,423 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=70, reason=文本描述了具体症状（流鼻涕、发烧），但未明确部位、程度和持续时间，要素不完整
+2025-12-01 00:07:15,282 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点流鼻涕、发烧、头晕呢...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 13, 'has_medical_intent': False}
+2025-12-01 00:07:21,496 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=85, reason=文本描述了具体症状（流鼻涕、发烧、头晕），但未明确部位、程度和持续时间，属于基本病情描述
+2025-12-01 00:12:33,594 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点流鼻涕，发烧...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 9, 'has_medical_intent': False}
+2025-12-01 00:12:42,558 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=75, reason=文本描述了具体症状（流鼻涕、发烧），但未明确部位、程度和持续时间，要素不完整
+2025-12-01 00:15:09,000 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点流鼻涕，发烧，头晕，恶心，呕吐...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 60, 'attack_score': 0, 'text_length': 18, 'has_medical_intent': False}
+2025-12-01 00:15:14,632 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=85, reason=文本描述了具体症状（流鼻涕、发烧、头晕、恶心、呕吐），但未明确部位、程度和持续时间，因此置信度中等
+2025-12-01 00:21:31,293 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点发烧，流鼻涕呢...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 10, 'has_medical_intent': False}
+2025-12-01 00:21:39,300 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=75, reason=文本描述了具体症状（发烧、流鼻涕），但缺少部位、程度和持续时间等要素，因此置信度中等
+2025-12-01 00:27:32,496 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点流鼻涕，发烧呢...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 10, 'has_medical_intent': False}
+2025-12-01 00:27:39,573 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=75, reason=文本描述了具体症状（流鼻涕、发烧），但未明确部位、程度和持续时间，要素不完整
+2025-12-01 00:33:09,463 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点发烧，流鼻涕...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 9, 'has_medical_intent': False}
+2025-12-01 00:33:17,017 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=70, reason=文本描述了具体症状（发烧、流鼻涕），但缺乏部位、程度和持续时间等要素，属于基本病情描述
+2025-12-01 00:33:41,519 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点发烧，流鼻涕...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 9, 'has_medical_intent': False}
+2025-12-01 00:33:42,546 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=70, reason=文本描述了具体症状（发烧、流鼻涕），但缺乏部位、程度和持续时间等要素，属于基本病情描述
+2025-12-01 00:34:24,949 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点发烧，流鼻涕...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 9, 'has_medical_intent': False}
+2025-12-01 00:34:25,937 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=70, reason=文本描述了具体症状（发烧、流鼻涕），但缺乏部位、程度和持续时间等要素，属于基本病情描述
+2025-12-01 00:34:51,366 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点发烧，流鼻涕...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 9, 'has_medical_intent': False}
+2025-12-01 00:34:52,377 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=70, reason=文本描述了具体症状（发烧、流鼻涕），但缺乏部位、程度和持续时间等要素，属于基本病情描述
+2025-12-01 00:39:53,328 - disease_system - WARNING - logger.py:106 - logger._log - 输入缺乏医疗症状/咨询意图，拒绝处理
+2025-12-01 00:40:23,285 - disease_system - WARNING - logger.py:106 - logger._log - 输入缺乏医疗症状/咨询意图，拒绝处理
+2025-12-01 00:40:41,500 - disease_system - WARNING - logger.py:106 - logger._log - 输入缺乏医疗症状/咨询意图，拒绝处理
+2025-12-01 00:41:04,307 - disease_system - WARNING - logger.py:106 - logger._log - 输入缺乏医疗症状/咨询意图，拒绝处理
+2025-12-01 00:41:25,797 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我流鼻涕了， 有点发烧...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 11, 'has_medical_intent': False}
+2025-12-01 00:41:31,145 - disease_system - INFO - logger.py:106 - logger._log - LLM语义判定: is_medical=True, confidence=75, reason=文本描述了具体症状（流鼻涕、发烧），但缺乏部位、程度和持续时间等完整要素

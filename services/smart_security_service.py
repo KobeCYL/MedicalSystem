@@ -3,6 +3,7 @@ import re
 import jieba
 from typing import List, Dict, Tuple
 from utils.logger import logger
+from services.llm_service import EnhancedLLMService
 
 class SmartSecurityService:
     """智能安全检测服务 - 使用语义分析减少误判"""
@@ -15,6 +16,7 @@ class SmartSecurityService:
             r'(?i)(password|token|key|secret|密码|密钥|秘钥).*(?:extract|获取|泄露)',
             r'<script|javascript|sql|union|select|drop|delete',  # 代码注入
             r'\$\{.*\}|\{\{.*\}\}',  # 模板注入
+            r'(?i)(忘记|忘掉).*(指令|提示|系统)',  # 指令覆盖/越权尝试
         ]
         
         # 中等风险模式（需要结合上下文判断）
@@ -49,6 +51,11 @@ class SmartSecurityService:
         
         # 系统相关词（中风险，需结合上下文）
         self.system_keywords = ['系统', '程序', '代码', '脚本', '数据库', '服务器', '管理员']
+        try:
+            self.llm_service = EnhancedLLMService()
+        except Exception:
+            logger.warning("LLM服务未配置，语义分析将使用本地规则")
+            self.llm_service = None
     
     def _extract_keywords(self, text: str) -> List[str]:
         """提取关键词"""
@@ -145,6 +152,11 @@ class SmartSecurityService:
             # 基础清理
             text = text.strip()
             
+            # 非医疗咨询直接拒绝
+            if not self.is_medical_query(text):
+                logger.warning("输入缺乏医疗症状/咨询意图，拒绝处理")
+                return False
+            
             # 计算风险评分
             risk_score, risk_details = self._calculate_risk_score(text)
             
@@ -155,17 +167,25 @@ class SmartSecurityService:
             if risk_score >= 70:
                 logger.warning(f"高风险内容被拒绝: 评分={risk_score:.1f}, 原因={risk_details}")
                 return False
-            elif risk_score >= 40:
-                # 中等风险，需要更仔细判断
-                if risk_details['medical_score'] > 30:  # 有足够的医疗特征
-                    logger.info(f"中等风险但被接受: 有足够医疗特征, 评分={risk_score:.1f}")
-                    return True
-                else:
-                    logger.warning(f"中等风险内容被拒绝: 医疗特征不足, 评分={risk_score:.1f}")
+            
+            # 调用LLM语义判定
+            if self.llm_service:
+                intent = await self.llm_service.assess_medical_intent(text)
+                self.last_intent_assessment = intent
+                conf = int(intent.get('confidence', 0) or 0)
+                is_med = bool(intent.get('is_medical', False))
+                logger.info(f"LLM语义判定: is_medical={is_med}, confidence={conf}, reason={intent.get('reason')}")
+                if not is_med or conf < 60:
+                    logger.warning("语义判定不足以继续处理，已阻断")
                     return False
             else:
-                # 低风险，直接通过
-                return True
+                is_med = self.is_medical_query(text)
+                conf = 90 if is_med else 0
+                self.last_intent_assessment = {"is_medical": is_med, "confidence": conf, "reason": "本地规则判定"}
+                if not is_med or conf < 60:
+                    return False
+            
+            return True
                 
         except Exception as e:
             logger.error(f"安全检测异常: {e}")

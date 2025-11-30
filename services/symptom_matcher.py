@@ -82,12 +82,18 @@ class SymptomMatcher:
                 return self._get_default_result()
             
             # 选择最佳匹配
-            best_match = self._select_best_match(matched_diseases)
+            sorted_diseases = sorted(
+                matched_diseases.values(),
+                key=lambda x: (x["match_count"], x["confidence"]),
+                reverse=True
+            )
+            best_match = sorted_diseases[0]
             logger.log_process_step("best_match_selection", "completed", {
                 "best_disease": best_match["disease_id"],
                 "confidence": best_match["confidence"],
                 "matched_symptoms": best_match["matched_symptoms"]
             })
+            best_match["candidates"] = sorted_diseases
             
             return best_match
             
@@ -154,8 +160,9 @@ class SymptomMatcher:
     def _get_default_result(self) -> Dict[str, Any]:
         """获取默认结果（当无法匹配时）"""
         return {
-            "disease_id": "D01",  # 默认普通感冒
-            "disease_name": "普通感冒",
-            "confidence": 0.3,
-            "matched_symptoms": ["一般不适"]
+            "disease_id": "UNKNOWN",
+            "disease_name": "未匹配到已知疾病",
+            "confidence": 0.0,
+            "matched_symptoms": [],
+            "candidates": []
         }

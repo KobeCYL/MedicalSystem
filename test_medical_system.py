@@ -1,9 +1,14 @@
 """测试修复后的医疗诊断系统"""
 import asyncio
 import json
+import os
+from dotenv import load_dotenv
 from datetime import datetime
 from controllers.medical_controller import EnhancedMedicalController
 from utils.enhanced_logger import logger
+
+# 加载环境变量
+load_dotenv()
 
 async def test_medical_system():
     """测试修复后的医疗诊断系统"""
@@ -59,14 +64,19 @@ async def test_medical_system():
                 # 解析JSON格式的建议
                 import json
                 try:
+                    # 确保正确处理Unicode字符
                     advice_data = json.loads(result.advice)
                     print(f"  评估: {advice_data.get('assessment', 'N/A')}")
                     print(f"  立即行动: {', '.join(advice_data.get('immediate_actions', []))}")
                     print(f"  医疗建议: {advice_data.get('medical_advice', 'N/A')}")
                     print(f"  监测要点: {', '.join(advice_data.get('monitoring_points', []))}")
                     print(f"  紧急处理: {advice_data.get('emergency_handling', 'N/A')}")
-                except json.JSONDecodeError:
-                    print(f"  建议内容: {result.advice}")
+                except json.JSONDecodeError as e:
+                    print(f"  建议内容解析失败: {e}")
+                    print(f"  原始建议: {result.advice}")
+                except Exception as e:
+                    print(f"  建议显示错误: {e}")
+                    print(f"  建议类型: {type(result.advice)}")
             elif result.error_message:
                 print(f"  错误: {result.error_message}")
             
