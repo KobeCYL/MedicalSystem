@@ -1,0 +1,13 @@
+2025-11-30 16:38:47,247 - main_app - INFO - logger.py:106 - logger._log - 应用程序启动
+2025-11-30 16:38:47,252 - main_app - INFO - logger.py:106 - logger._log - 显示主菜单
+2025-11-30 22:08:03,715 - disease_system - ERROR - logger.py:106 - logger._log - 加载文件 guideline.json 失败: cannot schedule new futures after interpreter shutdown
+2025-11-30 22:08:03,716 - disease_system - ERROR - logger.py:106 - logger._log - 加载文件 disease_info.json 失败: cannot schedule new futures after interpreter shutdown
+2025-11-30 22:23:44,571 - disease_system - WARNING - logger.py:106 - logger._log - 未检测到医疗关键词: 恶心想吐，肚子痛
+2025-11-30 22:28:59,270 - disease_system - WARNING - logger.py:106 - logger._log - 未检测到医疗关键词: 恶心想吐，肚子痛
+2025-11-30 22:29:20,213 - disease_system - WARNING - logger.py:106 - logger._log - 未检测到医疗关键词: 恶心想吐，肚子痛
+2025-11-30 22:32:06,922 - disease_system - WARNING - logger.py:106 - logger._log - 未检测到医疗关键词: 头很晕呢
+2025-11-30 22:32:24,358 - disease_system - WARNING - logger.py:106 - logger._log - 未检测到医疗关键词: 我头很晕，怎么办
+2025-11-30 22:40:16,023 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我有点头晕咳嗽...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 7, 'has_medical_intent': False}
+2025-11-30 22:40:16,038 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='我发烧了，头很痛...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 20, 'attack_score': 0, 'text_length': 8, 'has_medical_intent': False}
+2025-11-30 22:40:16,052 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='胸口很痛，呼吸困难...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 9, 'has_medical_intent': False}
+2025-11-30 22:40:16,064 - disease_system - INFO - logger.py:106 - logger._log - 安全检测分析: 文本='恶心想吐，肚子痛...', 风险评分=0.0, 详情={'high_risk_matches': [], 'medium_risk_matches': [], 'medical_score': 40, 'attack_score': 0, 'text_length': 8, 'has_medical_intent': False}

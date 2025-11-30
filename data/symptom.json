@@ -1,0 +1,27 @@
+[
+  {
+    "disease_id": "D01",
+    "name": "普通感冒",
+    "related_symptoms": ["打喷嚏", "流鼻涕", "喉咙痛", "低烧"]
+  },
+  {
+    "disease_id": "D02",
+    "name": "过敏性鼻炎",
+    "related_symptoms": ["打喷嚏", "鼻子痒", "清澈鼻涕"]
+  },
+  {
+    "disease_id": "D03",
+    "name": "急性肠胃炎",
+    "related_symptoms": ["恶心", "呕吐", "腹泻", "腹痛"]
+  },
+  {
+    "disease_id": "D04",
+    "name": "高血压急症风险",
+    "related_symptoms": ["剧烈头痛", "视力模糊", "头晕"]
+  },
+  {
+    "disease_id": "D05",
+    "name": "心脏病发作风险",
+    "related_symptoms": ["胸痛", "压榨感", "呼吸困难", "左臂疼痛", "出冷汗"]
+  }
+]

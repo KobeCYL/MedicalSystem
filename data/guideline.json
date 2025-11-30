@@ -1,0 +1,27 @@
+[
+  {
+    "disease_id": "D01",
+    "urgency": "低",
+    "recommended_action": "建议居家休息，多喝水，观察症状变化。"
+  },
+  {
+    "disease_id": "D02",
+    "urgency": "低",
+    "recommended_action": "建议远离已知过敏原，可考虑非处方抗过敏药。"
+  },
+  {
+    "disease_id": "D03",
+    "urgency": "中",
+    "recommended_action": "建议清淡饮食，补充电解质水。若症状频繁或加重，请立即就医。"
+  },
+  {
+    "disease_id": "D04",
+    "urgency": "高",
+    "recommended_action": "**情况紧急**。建议立即由他人陪同前往最近的急诊中心。"
+  },
+  {
+    "disease_id": "D05",
+    "urgency": "紧急",
+    "recommended_action": "**情况极其危急**。请立即拨打急救电话（如120），并等待救援。"
+  }
+]
