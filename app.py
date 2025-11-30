@@ -35,7 +35,8 @@ async def medical_query():
         patient_info = data.get('patient_info', {})
         
         # 处理查询
-        result = await medical_controller.process_query(symptom_text, patient_info)
+        client_start_ts = data.get('client_start_ts')
+        result = await medical_controller.process_query(symptom_text, patient_info, client_start_ts)
         
         # 返回结构化响应
         return jsonify(result.dict())
@@ -115,7 +116,10 @@ def system_info():
 @app.route('/api/history', methods=['GET'])
 def get_history():
     try:
-        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'query_history.json')
+        base = os.path.dirname(os.path.abspath(__file__))
+        logs_path = os.path.join(base, 'logs', 'query_history.json')
+        root_path = os.path.join(base, 'query_history.json')
+        path = logs_path if os.path.exists(logs_path) else (root_path if os.path.exists(root_path) else logs_path)
         if not os.path.exists(path):
             return jsonify([])
         with open(path, 'r', encoding='utf-8') as f:
@@ -127,7 +131,10 @@ def get_history():
 @app.route('/api/stats', methods=['GET'])
 def get_stats():
     try:
-        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'query_history.json')
+        base = os.path.dirname(os.path.abspath(__file__))
+        logs_path = os.path.join(base, 'logs', 'query_history.json')
+        root_path = os.path.join(base, 'query_history.json')
+        path = logs_path if os.path.exists(logs_path) else (root_path if os.path.exists(root_path) else logs_path)
         entries = []
         if os.path.exists(path):
             with open(path, 'r', encoding='utf-8') as f:
@@ -146,7 +153,7 @@ def get_stats():
                 non_medical += 1
             elif s == 'failed' or s == 'error':
                 malicious += 1
-            d = e.get('duration_ms')
+            d = e.get('total_duration_ms') or e.get('duration_ms') or e.get('server_duration_ms')
             if isinstance(d, (int, float)):
                 durations.append(float(d))
         durations_sorted = sorted(durations)

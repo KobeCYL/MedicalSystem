@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# IDE/Editor
+.vscode/
+.idea/
+.DS_Store
+
+# Environments
+.env
+
+# Logs and runtime data
+logs/
+*.log
+logs/query_history.json
+
+# Streamlit
+.streamlit/
+

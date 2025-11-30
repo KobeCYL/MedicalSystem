@@ -53,7 +53,13 @@ st.markdown('<h1 class="main-header">🤖 智能医疗导诊系统</h1>', unsafe
 def _history_path() -> str:
     current_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(current_dir)
-    return os.path.join(project_root, "logs", "query_history.json")
+    logs_path = os.path.join(project_root, "logs", "query_history.json")
+    root_path = os.path.join(project_root, "query_history.json")
+    if os.path.exists(logs_path):
+        return logs_path
+    if os.path.exists(root_path):
+        return root_path
+    return logs_path
 
 def _read_file_history() -> List[Dict]:
     path = _history_path()
@@ -66,6 +72,17 @@ def _read_file_history() -> List[Dict]:
     except Exception:
         # 解析失败时，不返回空，保持现有会话数据，避免覆盖为0
         return st.session_state.get('query_history', [])
+
+def _write_file_history(data: List[Dict]):
+    path = _history_path()
+    tmp_path = path + ".tmp"
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    try:
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        os.replace(tmp_path, path)
+    except Exception:
+        pass
 
 def _load_history_into_session():
     file_history = _read_file_history()
@@ -139,7 +156,8 @@ with tab1:
                         "age": age,
                         "gender": gender,
                         "special_conditions": special_conditions
-                    }
+                    },
+                    "client_start_ts": datetime.now().isoformat()
                 }
                 with st.spinner("🔍 正在分析症状并生成建议..."):
                     try:
@@ -240,6 +258,17 @@ with tab2:
         file_history = _read_file_history()
         st.session_state.query_history = file_history
         st.success(f"已刷新，共 {len(st.session_state.query_history)} 条记录")
+    if st.button("🔄 从服务刷新历史", key="refresh_service_history"):
+        try:
+            resp = requests.get(f"{api_url}/api/history", timeout=8)
+            if resp.status_code == 200:
+                data = resp.json()
+                st.session_state.query_history = data if isinstance(data, list) else []
+                st.success(f"已从服务刷新，共 {len(st.session_state.query_history)} 条记录")
+            else:
+                st.error("服务历史获取失败")
+        except Exception:
+            st.error("无法连接到服务")
     if not st.session_state.query_history:
         st.info("暂无查询历史")
     else:
@@ -247,6 +276,12 @@ with tab2:
             with st.expander(f"查询 {len(st.session_state.query_history) - i}: {history['symptom'][:50]}..."):
                 st.write(f"**时间**: {datetime.fromisoformat(history['timestamp']).strftime('%Y-%m-%d %H:%M:%S')}")
                 st.write(f"**症状**: {history['symptom']}")
+                dur = history.get('duration_ms') or history.get('server_duration_ms')
+                if isinstance(dur, (int, float)):
+                    st.write(f"**服务耗时**: {int(dur)} ms")
+                tot = history.get('total_duration_ms')
+                if isinstance(tot, (int, float)):
+                    st.write(f"**总耗时**: {int(tot)} ms")
                 if history['result']['status'] == 'success':
                     st.success(f"诊断: {history['result']['disease_name']}")
                     st.info(f"紧急程度: {history['result']['urgency']}")
@@ -302,6 +337,7 @@ with tab2:
                 if st.button(f"删除", key=f"delete_{i}"):
                     st.session_state.query_history.pop(len(st.session_state.query_history) - 1 - i)
                     st.success("已删除，刷新以同步本地文件")
+                    _write_file_history(st.session_state.query_history)
 
 with tab3:
     st.subheader("🔒 恶意与正常统计")
@@ -323,6 +359,20 @@ with tab3:
     colm1.metric("正常次数", normal)
     colm2.metric("恶意/不合规次数", malicious)
     colm3.metric("非医疗表达次数", non_medical)
+    try:
+        stats_resp = requests.get(f"{api_url}/api/stats", timeout=8)
+        if stats_resp.status_code == 200:
+            stats = stats_resp.json()
+            d = stats.get('durations_ms', {})
+            st.subheader("⏱️ 性能统计")
+            st.write({
+                "样本数": d.get('count', 0),
+                "平均耗时ms": d.get('avg', 0.0),
+                "P95耗时ms": d.get('p95', 0.0),
+                "最大耗时ms": d.get('max', 0.0)
+            })
+    except Exception:
+        pass
     if malicious > 0:
         st.subheader("恶意样例")
         for h in hist:

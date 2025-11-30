@@ -25,7 +25,7 @@ class EnhancedMedicalController:
         self.symptom_matcher = SymptomMatcher()  # 新增症状匹配器
         logger.info("EnhancedMedicalController initialized successfully")
     
-    async def process_query(self, symptom_text: str, patient_info: Dict[str, Any]) -> MedicalQueryResult:
+    async def process_query(self, symptom_text: str, patient_info: Dict[str, Any], client_start_ts: str = None) -> MedicalQueryResult:
         """处理医疗查询，返回结构化结果"""
         start_perf = time.perf_counter()
         logger.log_process_step("process_query", "started", {
@@ -63,7 +63,10 @@ class EnhancedMedicalController:
                     "symptom": symptom_text,
                     "patient_info": patient_info,
                     "result": result_model.dict(),
-                    "duration_ms": int((time.perf_counter() - start_perf) * 1000)
+                    "server_duration_ms": int((time.perf_counter() - start_perf) * 1000),
+                    "duration_ms": int((time.perf_counter() - start_perf) * 1000),
+                    "client_start_ts": client_start_ts,
+                    "total_duration_ms": self._calc_total_duration_ms(client_start_ts)
                 })
                 return result_model
             
@@ -83,7 +86,10 @@ class EnhancedMedicalController:
                     "symptom": symptom_text,
                     "patient_info": patient_info,
                     "result": result_model.dict(),
-                    "duration_ms": int((time.perf_counter() - start_perf) * 1000)
+                    "server_duration_ms": int((time.perf_counter() - start_perf) * 1000),
+                    "duration_ms": int((time.perf_counter() - start_perf) * 1000),
+                    "client_start_ts": client_start_ts,
+                    "total_duration_ms": self._calc_total_duration_ms(client_start_ts)
                 })
                 return result_model
             
@@ -213,7 +219,10 @@ class EnhancedMedicalController:
                 "symptom": symptom_text,
                 "patient_info": patient_info,
                 "result": result.dict(),
-                "duration_ms": int((time.perf_counter() - start_perf) * 1000)
+                "server_duration_ms": int((time.perf_counter() - start_perf) * 1000),
+                "duration_ms": int((time.perf_counter() - start_perf) * 1000),
+                "client_start_ts": client_start_ts,
+                "total_duration_ms": self._calc_total_duration_ms(client_start_ts)
             })
             return result
             
@@ -305,3 +314,12 @@ class EnhancedMedicalController:
             os.replace(tmp_path, path)
         except Exception as e:
             logger.warning(str(e))
+
+    def _calc_total_duration_ms(self, client_start_ts: str):
+        try:
+            if not client_start_ts:
+                return None
+            cs = datetime.fromisoformat(client_start_ts)
+            return int((datetime.now() - cs).total_seconds() * 1000)
+        except Exception:
+            return None
