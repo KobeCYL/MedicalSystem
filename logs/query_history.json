@@ -1603,5 +1603,258 @@
     "duration_ms": 842,
     "client_start_ts": "2025-12-01T08:59:20.284512",
     "total_duration_ms": 2887
+  },
+  {
+    "timestamp": "2025-12-01T15:51:35.059776",
+    "symptom": "发热咳嗽",
+    "patient_info": {
+      "age": 30,
+      "gender": "男"
+    },
+    "result": {
+      "status": "success",
+      "disease_name": "普通感冒",
+      "advice": "{\"assessment\": \"\\u60a3\\u8005\\u4e3a30\\u5c81\\u7537\\u6027\\uff0c\\u65e0\\u7279\\u6b8a\\u5065\\u5eb7\\u72b6\\u51b5\\uff0c\\u51fa\\u73b0\\u54b3\\u55fd\\u3001\\u53d1\\u70ed\\u75c7\\u72b6\\uff0c\\u7591\\u4f3c\\u666e\\u901a\\u611f\\u5192\\u3002\\u6839\\u636e\\u75c7\\u72b6\\u63cf\\u8ff0\\uff0c\\u7d27\\u6025\\u7a0b\\u5ea6\\u8f83\\u4f4e\\uff0c\\u5c5e\\u4e8e\\u5e38\\u89c1\\u75c5\\u6bd2\\u611f\\u67d3\\uff0c\\u901a\\u5e38\\u5177\\u6709\\u81ea\\u9650\\u6027\\u3002\", \"immediate_actions\": [\"\\u5c45\\u5bb6\\u4f11\\u606f\\uff0c\\u907f\\u514d\\u52b3\\u7d2f\\u548c\\u524d\\u5f80\\u4eba\\u7fa4\\u5bc6\\u96c6\\u573a\\u6240\", \"\\u4fdd\\u8bc1\\u5145\\u8db3\\u6c34\\u5206\\u6444\\u5165\\uff0c\\u5efa\\u8bae\\u996e\\u7528\\u6e29\\u6c34\", \"\\u53ef\\u8003\\u8651\\u4f7f\\u7528\\u975e\\u5904\\u65b9\\u89e3\\u70ed\\u9547\\u75db\\u836f\\uff08\\u5982\\u5bf9\\u4e59\\u9170\\u6c28\\u57fa\\u915a\\u6216\\u5e03\\u6d1b\\u82ac\\uff09\\u7f13\\u89e3\\u53d1\\u70ed\\u548c\\u4e0d\\u9002\\uff0c\\u8bf7\\u6309\\u8bf4\\u660e\\u4e66\\u4f7f\\u7528\", \"\\u4fdd\\u6301\\u5ba4\\u5185\\u7a7a\\u6c14\\u6d41\\u901a\"], \"medical_advice\": \"\\u5efa\\u8bae\\u5c45\\u5bb6\\u89c2\\u5bdf3-5\\u5929\\u3002\\u591a\\u6570\\u666e\\u901a\\u611f\\u5192\\u75c7\\u72b6\\u4f1a\\u5728\\u6b64\\u671f\\u95f4\\u9010\\u6e10\\u7f13\\u89e3\\u3002\\u5982\\u679c\\u51fa\\u73b0\\u4ee5\\u4e0b\\u60c5\\u51b5\\uff0c\\u8bf7\\u53ca\\u65f6\\u5c31\\u533b\\uff1a1) \\u9ad8\\u70ed\\uff08\\u4f53\\u6e29\\u6301\\u7eed\\u8d85\\u8fc739\\u00b0C\\uff09\\u4e0d\\u9000\\uff1b2) \\u547c\\u5438\\u56f0\\u96be\\u3001\\u80f8\\u75db\\uff1b3) \\u75c7\\u72b6\\u6301\\u7eed\\u4e00\\u5468\\u65e0\\u6539\\u5584\\u6216\\u52a0\\u91cd\\uff1b4) \\u51fa\\u73b0\\u4e25\\u91cd\\u5934\\u75db\\u3001\\u76ae\\u75b9\\u6216\\u5176\\u4ed6\\u65b0\\u53d1\\u75c7\\u72b6\\u3002\", \"monitoring_points\": [\"\\u4f53\\u6e29\\u53d8\\u5316\\uff0c\\u6bcf\\u65e5\\u6d4b\\u91cf2-3\\u6b21\\u5e76\\u8bb0\\u5f55\", \"\\u54b3\\u55fd\\u9891\\u7387\\u548c\\u6027\\u8d28\\u7684\\u53d8\\u5316\\uff08\\u5982\\u662f\\u5426\\u51fa\\u73b0\\u8113\\u75f0\\uff09\", \"\\u6574\\u4f53\\u7cbe\\u795e\\u72b6\\u6001\\u548c\\u4f53\\u529b\\u6062\\u590d\\u60c5\\u51b5\", \"\\u662f\\u5426\\u51fa\\u73b0\\u65b0\\u7684\\u75c7\\u72b6\\uff0c\\u5982\\u54bd\\u75db\\u3001\\u6d41\\u6d95\\u3001\\u808c\\u8089\\u9178\\u75db\\u7b49\"], \"emergency_handling\": \"\\u82e5\\u51fa\\u73b0\\u547c\\u5438\\u56f0\\u96be\\u3001\\u610f\\u8bc6\\u6a21\\u7cca\\u3001\\u6301\\u7eed\\u9ad8\\u70ed\\u4e0d\\u9000\\u3001\\u4e25\\u91cd\\u80f8\\u75db\\u6216\\u54b3\\u8840\\u7b49\\u7d27\\u6025\\u60c5\\u51b5\\uff0c\\u8bf7\\u7acb\\u5373\\u524d\\u5f80\\u6025\\u8bca\\u79d1\\u5c31\\u8bca\\u6216\\u547c\\u53eb\\u6025\\u6551\\u670d\\u52a1\\u3002\"}",
+      "urgency": "低",
+      "supplementary_info": {
+        "confidence": 0.9,
+        "matched_symptoms": [
+          "咳嗽",
+          "发热"
+        ],
+        "candidates": [
+          {
+            "disease_id": "D01",
+            "disease_name": "普通感冒",
+            "confidence": 0.9,
+            "matched_symptoms": [
+              "咳嗽",
+              "发热"
+            ],
+            "guideline": {
+              "disease_id": "D01",
+              "urgency": "低",
+              "recommended_action": "建议居家休息，多喝水，观察症状变化。"
+            },
+            "risk": {
+              "disease_id": "D01",
+              "special_notes": "常见病毒感染，通常自愈。注意与流感的区别，后者症状更重。"
+            }
+          }
+        ],
+        "multi_analysis": {
+          "probabilities": [
+            {
+              "disease_id": "D01",
+              "disease_name": "普通感冒",
+              "probability": 90
+            }
+          ],
+          "advice": "根据症状匹配和患者信息，普通感冒的可能性很高。建议居家休息，多喝水，观察症状变化。若症状加重或出现呼吸困难、高热不退等情况，请及时就医。",
+          "notes": "普通感冒通常为自限性疾病，无需特殊治疗。注意与流感区分，流感症状更重且可能需抗病毒治疗。保持良好卫生习惯，避免传染他人。",
+          "best_candidate": {
+            "disease_id": "D01",
+            "disease_name": "普通感冒",
+            "probability": 90,
+            "guideline": {
+              "disease_id": "D01",
+              "urgency": "低",
+              "recommended_action": "建议居家休息，多喝水，观察症状变化。"
+            },
+            "risk": {
+              "disease_id": "D01",
+              "special_notes": "常见病毒感染，通常自愈。注意与流感的区别，后者症状更重。"
+            }
+          }
+        }
+      },
+      "error_message": null
+    },
+    "server_duration_ms": 23535,
+    "duration_ms": 23535,
+    "client_start_ts": "2025-12-01T15:51:11.524284",
+    "total_duration_ms": 23536
+  },
+  {
+    "timestamp": "2025-12-01T16:39:03.272903",
+    "symptom": "发热咳嗽",
+    "patient_info": {
+      "age": 30,
+      "gender": "男"
+    },
+    "result": {
+      "status": "success",
+      "disease_name": "普通感冒",
+      "advice": "{\"assessment\": \"\\u60a3\\u8005\\u4e3a30\\u5c81\\u7537\\u6027\\uff0c\\u65e0\\u7279\\u6b8a\\u72b6\\u51b5\\uff0c\\u51fa\\u73b0\\u54b3\\u55fd\\u3001\\u53d1\\u70ed\\u75c7\\u72b6\\uff0c\\u7591\\u4f3c\\u666e\\u901a\\u611f\\u5192\\u3002\\u6839\\u636e\\u75c7\\u72b6\\u63cf\\u8ff0\\u548c\\u7d27\\u6025\\u7a0b\\u5ea6\\u8bc4\\u4f30\\uff0c\\u5c5e\\u4e8e\\u4f4e\\u98ce\\u9669\\u60c5\\u51b5\\u3002\\u666e\\u901a\\u611f\\u5192\\u901a\\u5e38\\u7531\\u75c5\\u6bd2\\u611f\\u67d3\\u5f15\\u8d77\\uff0c\\u5177\\u6709\\u81ea\\u9650\\u6027\\uff0c\\u4e00\\u822c7-10\\u5929\\u5185\\u53ef\\u81ea\\u884c\\u597d\\u8f6c\\u3002\", \"immediate_actions\": [\"\\u5c45\\u5bb6\\u4f11\\u606f\\uff0c\\u907f\\u514d\\u52b3\\u7d2f\\u548c\\u5267\\u70c8\\u8fd0\\u52a8\", \"\\u4fdd\\u8bc1\\u5145\\u8db3\\u6c34\\u5206\\u6444\\u5165\\uff0c\\u5efa\\u8bae\\u996e\\u7528\\u6e29\\u6c34\", \"\\u53ef\\u8003\\u8651\\u4f7f\\u7528\\u975e\\u5904\\u65b9\\u9000\\u70ed\\u836f\\uff08\\u5982\\u5bf9\\u4e59\\u9170\\u6c28\\u57fa\\u915a\\u6216\\u5e03\\u6d1b\\u82ac\\uff09\\u7f13\\u89e3\\u53d1\\u70ed\\u548c\\u4e0d\\u9002\\uff0c\\u8bf7\\u6309\\u8bf4\\u660e\\u4e66\\u670d\\u7528\", \"\\u4fdd\\u6301\\u5ba4\\u5185\\u7a7a\\u6c14\\u6d41\\u901a\\uff0c\\u6ce8\\u610f\\u4fdd\\u6696\"], \"medical_advice\": \"\\u5efa\\u8bae\\u5c45\\u5bb6\\u89c2\\u5bdf\\u548c\\u62a4\\u7406\\u3002\\u5982\\u679c\\u51fa\\u73b0\\u4ee5\\u4e0b\\u60c5\\u51b5\\uff0c\\u8bf7\\u53ca\\u65f6\\u5c31\\u533b\\uff1a1\\uff09\\u9ad8\\u70ed\\u6301\\u7eed\\u8d85\\u8fc73\\u5929\\u4e0d\\u9000\\uff1b2\\uff09\\u547c\\u5438\\u56f0\\u96be\\u3001\\u80f8\\u75db\\u6216\\u54b3\\u8840\\uff1b3\\uff09\\u75c7\\u72b6\\u52a0\\u91cd\\u6216\\u51fa\\u73b0\\u65b0\\u7684\\u4e25\\u91cd\\u75c7\\u72b6\\uff1b4\\uff09\\u75c7\\u72b6\\u6301\\u7eed\\u8d85\\u8fc710\\u5929\\u65e0\\u6539\\u5584\\u3002\\u666e\\u901a\\u611f\\u5192\\u4e0e\\u6d41\\u611f\\u75c7\\u72b6\\u76f8\\u4f3c\\u4f46\\u901a\\u5e38\\u8f83\\u8f7b\\uff0c\\u82e5\\u51fa\\u73b0\\u5168\\u8eab\\u9178\\u75db\\u3001\\u6781\\u5ea6\\u4e4f\\u529b\\u7b49\\u6d41\\u611f\\u6837\\u75c7\\u72b6\\u52a0\\u91cd\\uff0c\\u4e5f\\u5efa\\u8bae\\u5c31\\u533b\\u8bc4\\u4f30\\u3002\", \"monitoring_points\": [\"\\u4f53\\u6e29\\u53d8\\u5316\\uff1a\\u6bcf\\u65e5\\u6d4b\\u91cf2-3\\u6b21\\u4f53\\u6e29\\uff0c\\u8bb0\\u5f55\\u53d1\\u70ed\\u7a0b\\u5ea6\\u548c\\u6301\\u7eed\\u65f6\\u95f4\", \"\\u54b3\\u55fd\\u6027\\u8d28\\uff1a\\u6ce8\\u610f\\u54b3\\u55fd\\u9891\\u7387\\u3001\\u662f\\u5426\\u6709\\u75f0\\u53ca\\u75f0\\u6db2\\u989c\\u8272\", \"\\u547c\\u5438\\u72b6\\u51b5\\uff1a\\u89c2\\u5bdf\\u662f\\u5426\\u6709\\u547c\\u5438\\u6025\\u4fc3\\u3001\\u547c\\u5438\\u56f0\\u96be\\u8868\\u73b0\", \"\\u5168\\u8eab\\u75c7\\u72b6\\uff1a\\u5173\\u6ce8\\u662f\\u5426\\u51fa\\u73b0\\u5934\\u75db\\u3001\\u808c\\u8089\\u9178\\u75db\\u3001\\u4e4f\\u529b\\u52a0\\u91cd\\u7b49\\u60c5\\u51b5\", \"\\u75c7\\u72b6\\u6f14\\u53d8\\uff1a\\u8bb0\\u5f55\\u75c7\\u72b6\\u662f\\u9010\\u6e10\\u7f13\\u89e3\\u8fd8\\u662f\\u52a0\\u91cd\"], \"emergency_handling\": \"\\u5982\\u51fa\\u73b0\\u4ee5\\u4e0b\\u7d27\\u6025\\u60c5\\u51b5\\uff0c\\u8bf7\\u7acb\\u5373\\u5c31\\u533b\\u6216\\u62e8\\u6253\\u6025\\u6551\\u7535\\u8bdd\\uff1a1\\uff09\\u547c\\u5438\\u56f0\\u96be\\u3001\\u5634\\u5507\\u6216\\u9762\\u90e8\\u53d1\\u7d2b\\uff1b2\\uff09\\u610f\\u8bc6\\u6a21\\u7cca\\u3001\\u55dc\\u7761\\u6216\\u96be\\u4ee5\\u5524\\u9192\\uff1b3\\uff09\\u9ad8\\u70ed\\u60ca\\u53a5\\uff1b4\\uff09\\u4e25\\u91cd\\u80f8\\u75db\\u6216\\u54b3\\u51fa\\u5927\\u91cf\\u8840\\u6db2\\u3002\"}",
+      "urgency": "低",
+      "supplementary_info": {
+        "confidence": 0.9,
+        "matched_symptoms": [
+          "咳嗽",
+          "发热"
+        ],
+        "candidates": [
+          {
+            "disease_id": "D01",
+            "disease_name": "普通感冒",
+            "confidence": 0.9,
+            "matched_symptoms": [
+              "咳嗽",
+              "发热"
+            ],
+            "guideline": {
+              "disease_id": "D01",
+              "urgency": "低",
+              "recommended_action": "建议居家休息，多喝水，观察症状变化。"
+            },
+            "risk": {
+              "disease_id": "D01",
+              "special_notes": "常见病毒感染，通常自愈。注意与流感的区别，后者症状更重。"
+            }
+          }
+        ],
+        "multi_analysis": {
+          "probabilities": [
+            {
+              "disease_id": "D01",
+              "disease_name": "普通感冒",
+              "probability": 90
+            }
+          ],
+          "advice": "根据症状匹配和置信度，普通感冒可能性较高。建议居家休息，多喝水，观察症状变化。若症状加重或出现呼吸困难、持续高热等，请及时就医。",
+          "notes": "普通感冒通常为自限性疾病，注意与流感区分。患者无特殊状况，年龄较轻，一般预后良好。",
+          "best_candidate": {
+            "disease_id": "D01",
+            "disease_name": "普通感冒",
+            "probability": 90,
+            "guideline": {
+              "disease_id": "D01",
+              "urgency": "低",
+              "recommended_action": "建议居家休息，多喝水，观察症状变化。"
+            },
+            "risk": {
+              "disease_id": "D01",
+              "special_notes": "常见病毒感染，通常自愈。注意与流感的区别，后者症状更重。"
+            }
+          }
+        }
+      },
+      "error_message": null
+    },
+    "server_duration_ms": 28289,
+    "duration_ms": 28289,
+    "client_start_ts": "2025-12-01T16:38:34.982922",
+    "total_duration_ms": 28290
+  },
+  {
+    "timestamp": "2025-12-01T16:41:33.966341",
+    "symptom": "发热咳嗽",
+    "patient_info": {
+      "age": 30,
+      "gender": "男"
+    },
+    "result": {
+      "status": "success",
+      "disease_name": "普通感冒",
+      "advice": "{\"assessment\": \"\\u60a3\\u8005\\u4e3a30\\u5c81\\u7537\\u6027\\uff0c\\u65e0\\u7279\\u6b8a\\u72b6\\u51b5\\uff0c\\u51fa\\u73b0\\u54b3\\u55fd\\u3001\\u53d1\\u70ed\\u75c7\\u72b6\\uff0c\\u7591\\u4f3c\\u666e\\u901a\\u611f\\u5192\\u3002\\u6839\\u636e\\u75c7\\u72b6\\u63cf\\u8ff0\\u548c\\u7d27\\u6025\\u7a0b\\u5ea6\\u8bc4\\u4f30\\uff0c\\u5c5e\\u4e8e\\u4f4e\\u98ce\\u9669\\u60c5\\u51b5\\u3002\\u666e\\u901a\\u611f\\u5192\\u901a\\u5e38\\u7531\\u75c5\\u6bd2\\u611f\\u67d3\\u5f15\\u8d77\\uff0c\\u5177\\u6709\\u81ea\\u9650\\u6027\\uff0c\\u4e00\\u822c7-10\\u5929\\u5185\\u53ef\\u81ea\\u884c\\u597d\\u8f6c\\u3002\", \"immediate_actions\": [\"\\u5c45\\u5bb6\\u4f11\\u606f\\uff0c\\u907f\\u514d\\u52b3\\u7d2f\\u548c\\u5267\\u70c8\\u8fd0\\u52a8\", \"\\u4fdd\\u8bc1\\u5145\\u8db3\\u6c34\\u5206\\u6444\\u5165\\uff0c\\u5efa\\u8bae\\u996e\\u7528\\u6e29\\u6c34\", \"\\u53ef\\u8003\\u8651\\u4f7f\\u7528\\u975e\\u5904\\u65b9\\u9000\\u70ed\\u836f\\uff08\\u5982\\u5bf9\\u4e59\\u9170\\u6c28\\u57fa\\u915a\\u6216\\u5e03\\u6d1b\\u82ac\\uff09\\u7f13\\u89e3\\u53d1\\u70ed\\u548c\\u4e0d\\u9002\\uff0c\\u8bf7\\u6309\\u8bf4\\u660e\\u4e66\\u670d\\u7528\", \"\\u4fdd\\u6301\\u5ba4\\u5185\\u7a7a\\u6c14\\u6d41\\u901a\\uff0c\\u6ce8\\u610f\\u4fdd\\u6696\"], \"medical_advice\": \"\\u5efa\\u8bae\\u5c45\\u5bb6\\u89c2\\u5bdf\\u548c\\u62a4\\u7406\\u3002\\u5982\\u679c\\u51fa\\u73b0\\u4ee5\\u4e0b\\u60c5\\u51b5\\uff0c\\u8bf7\\u53ca\\u65f6\\u5c31\\u533b\\uff1a1\\uff09\\u9ad8\\u70ed\\u6301\\u7eed\\u8d85\\u8fc73\\u5929\\u4e0d\\u9000\\uff1b2\\uff09\\u547c\\u5438\\u56f0\\u96be\\u3001\\u80f8\\u75db\\u6216\\u54b3\\u8840\\uff1b3\\uff09\\u75c7\\u72b6\\u52a0\\u91cd\\u6216\\u51fa\\u73b0\\u65b0\\u7684\\u4e25\\u91cd\\u75c7\\u72b6\\uff1b4\\uff09\\u75c7\\u72b6\\u6301\\u7eed\\u8d85\\u8fc710\\u5929\\u65e0\\u6539\\u5584\\u3002\\u666e\\u901a\\u611f\\u5192\\u4e0e\\u6d41\\u611f\\u75c7\\u72b6\\u76f8\\u4f3c\\u4f46\\u901a\\u5e38\\u8f83\\u8f7b\\uff0c\\u82e5\\u51fa\\u73b0\\u5168\\u8eab\\u9178\\u75db\\u3001\\u6781\\u5ea6\\u4e4f\\u529b\\u7b49\\u6d41\\u611f\\u6837\\u75c7\\u72b6\\u52a0\\u91cd\\uff0c\\u4e5f\\u5efa\\u8bae\\u5c31\\u533b\\u8bc4\\u4f30\\u3002\", \"monitoring_points\": [\"\\u4f53\\u6e29\\u53d8\\u5316\\uff1a\\u6bcf\\u65e5\\u6d4b\\u91cf2-3\\u6b21\\u4f53\\u6e29\\uff0c\\u8bb0\\u5f55\\u53d1\\u70ed\\u7a0b\\u5ea6\\u548c\\u6301\\u7eed\\u65f6\\u95f4\", \"\\u54b3\\u55fd\\u6027\\u8d28\\uff1a\\u6ce8\\u610f\\u54b3\\u55fd\\u9891\\u7387\\u3001\\u662f\\u5426\\u6709\\u75f0\\u53ca\\u75f0\\u6db2\\u989c\\u8272\", \"\\u547c\\u5438\\u72b6\\u51b5\\uff1a\\u89c2\\u5bdf\\u662f\\u5426\\u6709\\u547c\\u5438\\u6025\\u4fc3\\u3001\\u547c\\u5438\\u56f0\\u96be\\u8868\\u73b0\", \"\\u5168\\u8eab\\u75c7\\u72b6\\uff1a\\u5173\\u6ce8\\u662f\\u5426\\u51fa\\u73b0\\u5934\\u75db\\u3001\\u808c\\u8089\\u9178\\u75db\\u3001\\u4e4f\\u529b\\u52a0\\u91cd\\u7b49\\u60c5\\u51b5\", \"\\u75c7\\u72b6\\u6f14\\u53d8\\uff1a\\u8bb0\\u5f55\\u75c7\\u72b6\\u662f\\u9010\\u6e10\\u7f13\\u89e3\\u8fd8\\u662f\\u52a0\\u91cd\"], \"emergency_handling\": \"\\u5982\\u51fa\\u73b0\\u4ee5\\u4e0b\\u7d27\\u6025\\u60c5\\u51b5\\uff0c\\u8bf7\\u7acb\\u5373\\u5c31\\u533b\\u6216\\u62e8\\u6253\\u6025\\u6551\\u7535\\u8bdd\\uff1a1\\uff09\\u547c\\u5438\\u56f0\\u96be\\u3001\\u5634\\u5507\\u6216\\u9762\\u90e8\\u53d1\\u7d2b\\uff1b2\\uff09\\u610f\\u8bc6\\u6a21\\u7cca\\u3001\\u55dc\\u7761\\u6216\\u96be\\u4ee5\\u5524\\u9192\\uff1b3\\uff09\\u9ad8\\u70ed\\u60ca\\u53a5\\uff1b4\\uff09\\u4e25\\u91cd\\u80f8\\u75db\\u6216\\u54b3\\u51fa\\u5927\\u91cf\\u8840\\u6db2\\u3002\"}",
+      "urgency": "低",
+      "supplementary_info": {
+        "confidence": 0.9,
+        "matched_symptoms": [
+          "咳嗽",
+          "发热"
+        ],
+        "candidates": [
+          {
+            "disease_id": "D01",
+            "disease_name": "普通感冒",
+            "confidence": 0.9,
+            "matched_symptoms": [
+              "咳嗽",
+              "发热"
+            ],
+            "guideline": {
+              "disease_id": "D01",
+              "urgency": "低",
+              "recommended_action": "建议居家休息，多喝水，观察症状变化。"
+            },
+            "risk": {
+              "disease_id": "D01",
+              "special_notes": "常见病毒感染，通常自愈。注意与流感的区别，后者症状更重。"
+            }
+          }
+        ],
+        "multi_analysis": {
+          "probabilities": [
+            {
+              "disease_id": "D01",
+              "disease_name": "普通感冒",
+              "probability": 90
+            }
+          ],
+          "advice": "根据症状匹配和置信度，普通感冒可能性较高。建议居家休息，多喝水，观察症状变化。若症状加重或出现呼吸困难、持续高热等，请及时就医。",
+          "notes": "普通感冒通常为自限性疾病，注意与流感区分。患者无特殊状况，年龄较轻，一般预后良好。",
+          "best_candidate": {
+            "disease_id": "D01",
+            "disease_name": "普通感冒",
+            "probability": 90,
+            "guideline": {
+              "disease_id": "D01",
+              "urgency": "低",
+              "recommended_action": "建议居家休息，多喝水，观察症状变化。"
+            },
+            "risk": {
+              "disease_id": "D01",
+              "special_notes": "常见病毒感染，通常自愈。注意与流感的区别，后者症状更重。"
+            }
+          }
+        }
+      },
+      "error_message": null
+    },
+    "server_duration_ms": 4754,
+    "duration_ms": 4754,
+    "client_start_ts": "2025-12-01T16:41:29.210513",
+    "total_duration_ms": 4756
+  },
+  {
+    "timestamp": "2025-12-01T16:41:41.900156",
+    "symptom": "",
+    "patient_info": {
+      "age": 25,
+      "gender": "女"
+    },
+    "result": {
+      "status": "failed",
+      "disease_name": null,
+      "advice": null,
+      "urgency": "未知",
+      "supplementary_info": null,
+      "error_message": "输入内容不符合医疗咨询要求：文本包含具体症状（发热、咳嗽），但缺少部位、程度、持续时间等关键要素，属于不完整的病情描述。 (置信度: 65)"
+    },
+    "server_duration_ms": 1,
+    "duration_ms": 1,
+    "client_start_ts": "2025-12-01T16:41:41.898305",
+    "total_duration_ms": 1
+  },
+  {
+    "timestamp": "2025-12-01T16:41:43.280319",
+    "symptom": "我有自杀的念头",
+    "patient_info": {
+      "age": 20,
+      "gender": "男"
+    },
+    "result": {
+      "status": "failed",
+      "disease_name": null,
+      "advice": null,
+      "urgency": "未知",
+      "supplementary_info": null,
+      "error_message": "输入内容不符合医疗咨询要求：文本包含具体症状（发热、咳嗽），但缺少部位、程度、持续时间等关键要素，属于不完整的病情描述。 (置信度: 65)"
+    },
+    "server_duration_ms": 0,
+    "duration_ms": 0,
+    "client_start_ts": "2025-12-01T16:41:43.278311",
+    "total_duration_ms": 2
   }
 ]

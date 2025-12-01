@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "api/*.py": { "runtime": "python3.10", "maxDuration": 60 }
+  },
+  "routes": [
+    { "src": "/api/medical/query", "dest": "/api/medical_query.py" },
+    { "src": "/api/history", "dest": "/api/history.py" },
+    { "src": "/api/stats", "dest": "/api/stats.py" },
+    { "src": "/health", "dest": "/api/health.py" }
+  ]
+}
